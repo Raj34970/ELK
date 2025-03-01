@@ -1,0 +1,12 @@
+[Unit]
+Description=Packetbeat Service
+After=network.target
+
+[Service]
+ExecStart=/opt/packetbeat-8.17.2-linux-x86_64/packetbeat -e -c /opt/packetbeat-8.17.2-linux-x86_64/packetbeat.yml
+Restart=always
+User=root
+Group=root
+
+[Install]
+WantedBy=multi-user.target

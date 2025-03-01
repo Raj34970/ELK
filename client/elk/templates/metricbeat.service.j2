@@ -1,0 +1,12 @@
+[Unit]
+Description=Metricbeat Service
+After=network.target
+
+[Service]
+ExecStart=/opt/metricbeat-8.17.2-linux-x86_64/metricbeat -e -c /opt/metricbeat-8.17.2-linux-x86_64/metricbeat.yml
+Restart=always
+User=root
+Group=root
+
+[Install]
+WantedBy=multi-user.target

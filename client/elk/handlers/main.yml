@@ -1,0 +1,28 @@
+# handlers file for elk
+---
+- name: Restart Packetbeat
+  systemd:
+    name: packetbeat
+    state: restarted
+    enabled: yes
+
+- name: Reload systemd
+  systemd:
+    daemon_reload: yes
+
+- name: Restart Metricbeat
+  systemd:
+    name: metricbeat
+    state: restarted
+
+- name: Restart Filebeat
+  systemd:
+    name: filebeat
+    state: restarted
+    enabled: yes
+
+- name: Restart Heartbeat
+  systemd:
+    name: heartbeat
+    state: restarted
+    enabled: yes

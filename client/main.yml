@@ -1,0 +1,10 @@
+---
+- name: Gathering the the ELK server
+  hosts: elk_server
+  gather_facts: true
+
+- name: Installing SYS Ops Apps
+  hosts: elk_client
+  gather_facts: true
+  roles:
+    - elk

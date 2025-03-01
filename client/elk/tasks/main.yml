@@ -1,0 +1,67 @@
+---
+- name: Install and Configure Packetbeat, Metricbeat & Filebeat on Debian 12 VMs
+  tags:
+    - never
+    - install
+  block:
+    - name: Update APT package cache
+      apt:
+        update_cache: yes
+
+    # Install dependencies for downloading and extracting tar files
+    - name: Install required dependencies
+      apt:
+        name:
+          - curl
+          - tar
+          - wget
+        state: present
+
+    - name: Download Packetbeat, Metricbeat, Filebeat and Heartbeat .tar.gz packages
+      get_url:
+        url: "{{ item.url }}"
+        dest: "{{ item.dest }}"
+        mode: '0644'
+      loop:
+        - {url: "https://artifacts.elastic.co/downloads/beats/packetbeat/packetbeat-8.17.2-linux-x86_64.tar.gz", dest: "/tmp/packetbeat-8.17.2-linux-x86_64.tar.gz"}
+        - {url: "https://artifacts.elastic.co/downloads/beats/metricbeat/metricbeat-8.17.2-linux-x86_64.tar.gz", dest: "/tmp/metricbeat-8.17.2-linux-x86_64.tar.gz"}
+        - {url: "https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-8.17.2-linux-x86_64.tar.gz", dest: "/tmp/filebeat-8.17.2-linux-x86_64.tar.gz"}
+        - {url: "https://artifacts.elastic.co/downloads/beats/heartbeat/heartbeat-8.17.2-linux-x86_64.tar.gz", dest: "/tmp/heartbeat-8.17.2-linux-x86_64.tar.gz"}
+
+
+    - name: Extract Packetbeat, Metricbeat & Filebeat
+      unarchive:
+        src: "{{ item }}"
+        dest: "/opt/"
+        remote_src: yes
+      loop:
+        - "/tmp/packetbeat-8.17.2-linux-x86_64.tar.gz"
+        - "/tmp/metricbeat-8.17.2-linux-x86_64.tar.gz"
+        - "/tmp/filebeat-8.17.2-linux-x86_64.tar.gz"
+        - "/tmp/heartbeat-8.17.2-linux-x86_64.tar.gz"
+
+    - name: The ELK server IP is
+      debug: 
+        msg: "{{ ELASTICSEARCH_IP }}"
+
+    - name: Configure Packetbeat, Metricbeat & Filebeat
+      template:
+        src: "{{ item.src }}"
+        dest: "{{ item.dest }}"
+        owner: root
+        group: root
+        mode: '0644'
+      notify: "{{ item.notify }}"
+      loop:
+        - {src: packetbeat.yml.j2, dest: "/opt/packetbeat-8.17.2-linux-x86_64/packetbeat.yml", notify: Restart Packetbeat}
+        - {src: metricbeat.yml.j2, dest: "/opt/metricbeat-8.17.2-linux-x86_64/metricbeat.yml", notify: Restart Metricbeat}
+        - {src: filebeat.yml.j2, dest: "/opt/filebeat-8.17.2-linux-x86_64/filebeat.yml", notify: Restart Filebeat}
+        - {src: heartbeat.yml.j2, dest: "/opt/heartbeat-8.17.2-linux-x86_64/heartbeat.yml", notify: Restart Heartbeat}
+        - {src: packetbeat.service.j2, dest: /etc/systemd/system/packetbeat.service, notify: Restart Packetbeat}
+        - {src: metricbeat.service.j2, dest: /etc/systemd/system/metricbeat.service, notify: Restart Metricbeat}
+        - {src: filebeat.service.j2, dest: /etc/systemd/system/filebeat.service, notify: Restart Filebeat}
+        - {src: heartbeat.service.j2, dest: /etc/systemd/system/heartbeat.service, notify: Restart Heartbeat}
+
+    - name: Reload systemd
+      systemd:
+        daemon_reload: yes

@@ -1,0 +1,13 @@
+metricbeat.modules:
+  - module: system
+    metricsets:
+      - cpu
+      - load
+      - memory
+      - network
+      - process
+    enabled: true
+    period: 10s
+
+output.elasticsearch:
+  hosts: ["http://{{ ELASTICSEARCH_IP }}:9200"]

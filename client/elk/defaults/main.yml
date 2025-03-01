@@ -1,0 +1,4 @@
+---
+# defaults file for elk
+packetbeat_path: /etc/packetbeat/packetbeat.yml
+metricbeat_path: /etc/metricbeat/metricbeat.yml

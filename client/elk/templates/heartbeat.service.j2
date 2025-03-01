@@ -1,0 +1,17 @@
+[Unit]
+Description=Elastic Heartbeat
+Documentation=https://www.elastic.co/guide/en/beats/heartbeat/index.html
+After=network.target
+
+[Service]
+User=root
+Group=root
+ExecStart=/opt/heartbeat-8.17.2-linux-x86_64/heartbeat -e -d "*"
+Restart=always
+WorkingDirectory=/opt/heartbeat-8.17.2-linux-x86_64/
+Environment="GOPATH=/opt/heartbeat-8.17.2-linux-x86_64/"
+Environment="HEARTBEAT_PATH_CONF=/opt/heartbeat-8.17.2-linux-x86_64/"
+ExecReload=/bin/kill -HUP $MAINPID
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,66 @@
+# This is a basic Heartbeat configuration file for monitoring HTTP, ICMP, and TCP services.
+
+# =================================== General =====================================
+# Name of the heartbeat instance. If you're running multiple heartbeats, you can give them different names.
+heartbeat.name: heartbeat
+
+# The path to the Heartbeat data directory.
+heartbeat.data.path: /var/lib/heartbeat
+
+# =================================== Monitors =====================================
+# Configure the heartbeat monitors for HTTP, ICMP, and TCP
+heartbeat.monitors:
+  # Monitor HTTP endpoints
+  - type: http
+    id: http_monitor
+    name: "HTTP Monitor"
+    schedule: '@every 10s'  # This can be adjusted to the desired interval
+    urls:
+      - "http://example.com"
+    timeout: 16s
+    check.request:
+      method: GET
+    check.response:
+      status: 200
+
+  # Monitor ICMP (ping) to check server availability
+  - type: icmp
+    id: icmp_monitor
+    name: "ICMP Monitor"
+    schedule: '@every 10s'
+    hosts:
+      - "192.168.1.1"  # IP or domain to ping
+    timeout: 5s
+
+  # Monitor TCP (can be used for any service that operates over TCP)
+  - type: tcp
+    id: tcp_monitor
+    name: "TCP Monitor"
+    schedule: '@every 10s'
+    hosts:
+      - "192.168.1.1:80"  # IP address and port
+    timeout: 5s
+
+# =================================== Output =====================================
+# Configure the output for sending the monitoring data to Elasticsearch
+output.elasticsearch:
+  hosts: ["http://{{ ELASTICSEARCH_IP }}:9200"]  # Dynamic IP from the playbook
+  username: "elastic"  # Add your username
+  password: "changeme"  # Add your password
+  ssl.verification_mode: none  # Optional: Adjust SSL settings if necessary
+
+# =================================== Logging =====================================
+logging:
+  level: info  # Set log level to info for normal operation
+  to_files: true
+  files:
+    path: /var/log/heartbeat
+    name: heartbeat
+    keepfiles: 7
+    permissions: 0644
+
+# =================================== Process =====================================
+# Monitor processes to ensure Heartbeat itself is running
+heartbeat.monitoring:
+  enabled: true
+  period: 10s

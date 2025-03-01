@@ -1,0 +1,12 @@
+[Unit]
+Description=Filebeat Service
+After=network.target
+
+[Service]
+ExecStart=/opt/filebeat-8.17.2-linux-x86_64/filebeat -e -c /opt/filebeat-8.17.2-linux-x86_64/filebeat.yml
+Restart=always
+User=root
+Group=root
+
+[Install]
+WantedBy=multi-user.target
