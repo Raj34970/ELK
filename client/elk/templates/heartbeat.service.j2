@@ -6,11 +6,11 @@ After=network.target
 [Service]
 User=root
 Group=root
-ExecStart=/opt/heartbeat-8.17.2-linux-x86_64/heartbeat -e -d "*"
+ExecStart=/opt/{{ item.1 }}/heartbeat -e -d "*"
 Restart=always
-WorkingDirectory=/opt/heartbeat-8.17.2-linux-x86_64/
-Environment="GOPATH=/opt/heartbeat-8.17.2-linux-x86_64/"
-Environment="HEARTBEAT_PATH_CONF=/opt/heartbeat-8.17.2-linux-x86_64/"
+WorkingDirectory=/opt/{{ item.1 }}/
+Environment="GOPATH=/opt/{{ item.1 }}/"
+Environment="HEARTBEAT_PATH_CONF=/opt/{{ item.1 }}/"
 ExecReload=/bin/kill -HUP $MAINPID
 
 [Install]

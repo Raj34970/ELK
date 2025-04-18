@@ -2,3 +2,5 @@
 # defaults file for elk
 packetbeat_path: /etc/packetbeat/packetbeat.yml
 metricbeat_path: /etc/metricbeat/metricbeat.yml
+
+elasticsearch_default_download: https://artifacts.elastic.co/downloads/beats/

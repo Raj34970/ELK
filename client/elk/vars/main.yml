@@ -1,0 +1,12 @@
+---
+elk_services:
+  - packetbeat
+  - metricbeat
+  - filebeat
+  - heartbeat
+
+versions:
+  - 8.17.2-linux-x86_64
+  - 8.17.2-linux-x86_64
+  - 8.17.2-linux-x86_64
+  - 8.17.2-linux-x86_64

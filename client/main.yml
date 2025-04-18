@@ -1,4 +1,6 @@
+## code: language=ansible
 ---
+# to gather the elasticsearch IP address
 - name: Gathering the the ELK server
   hosts: elk_server
   gather_facts: true
