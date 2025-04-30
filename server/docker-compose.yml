@@ -6,7 +6,13 @@ services:
       - discovery.type=single-node
       - bootstrap.memory_lock=true
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-      - xpack.security.enabled=false
+      - xpack.security.enabled=true
+      - xpack.security.authc.realms.oidc.oidc1.client_id=your-client-id
+      - xpack.security.authc.realms.oidc.oidc1.client_secret=your-client-secret
+      - xpack.security.authc.realms.oidc.oidc1.openid_connect_url=https://keycloak.lxhome.fr/.well-known/openid-configuration
+      - xpack.security.authc.realms.oidc.oidc1.scope=openid profile email
+      - xpack.security.authc.realms.oidc.oidc1.grant_type=authorization_code
+      - xpack.security.authc.realms.oidc.oidc1.userinfo_url=https://keycloak.lxhome.fr/userinfo
     ulimits:
       memlock:
         soft: -1
@@ -25,6 +31,13 @@ services:
       - elasticsearch
     environment:
       - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+      - xpack.security.authc.providers=oidc.oidc1
+      - xpack.security.authc.realms.oidc.oidc1.client_id=your-client-id
+      - xpack.security.authc.realms.oidc.oidc1.client_secret=your-client-secret
+      - xpack.security.authc.realms.oidc.oidc1.openid_connect_url=https://keycloak.lxhome.fr/.well-known/openid-configuration
+      - xpack.security.authc.realms.oidc.oidc1.scope=openid profile email
+      - xpack.security.authc.realms.oidc.oidc1.grant_type=authorization_code
+      - xpack.security.authc.realms.oidc.oidc1.userinfo_url=https://keycloak.lxhome.fr/userinfo
     ports:
       - "5601:5601"
     networks:
