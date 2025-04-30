@@ -1,28 +1,28 @@
 # handlers file for elk
 ---
-- name: Restart Packetbeat
-  systemd:
+- name: Restart packetbeat
+  ansible.builtin.systemd:
     name: packetbeat
     state: restarted
-    enabled: yes
+    enabled: true
 
-- name: Reload systemd
-  systemd:
-    daemon_reload: yes
-
-- name: Restart Metricbeat
-  systemd:
+- name: Restart metricbeat
+  ansible.builtin.systemd:
     name: metricbeat
     state: restarted
 
-- name: Restart Filebeat
-  systemd:
+- name: Restart filebeat
+  ansible.builtin.systemd:
     name: filebeat
     state: restarted
-    enabled: yes
+    enabled: true
 
-- name: Restart Heartbeat
-  systemd:
+- name: Restart heartbeat
+  ansible.builtin.systemd:
     name: heartbeat
     state: restarted
-    enabled: yes
+    enabled: true
+
+- name: Reload systemd
+  ansible.builtin.systemd:
+    daemon_reload: true
