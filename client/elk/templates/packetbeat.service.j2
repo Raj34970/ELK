@@ -3,7 +3,7 @@ Description=Packetbeat Service
 After=network.target
 
 [Service]
-ExecStart=/opt/{{ item.1 }}/packetbeat -e -c /opt/{{ item.1 }}/packetbeat.yml
+ExecStart=/opt/{{ item.0 }}-{{ item.1 }}/packetbeat -e -c /opt/{{ item.0 }}-{{ item.1 }}/packetbeat.yml
 Restart=always
 User=root
 Group=root

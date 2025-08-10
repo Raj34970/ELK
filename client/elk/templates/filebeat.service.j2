@@ -3,7 +3,7 @@ Description=Filebeat Service
 After=network.target
 
 [Service]
-ExecStart=/opt/{{ item.1 }}/filebeat -e -c /opt/{{ item.1 }}/filebeat.yml
+ExecStart=/opt/{{ item.0 }}-{{ item.1 }}/filebeat -e -c /opt/{{ item.0 }}-{{ item.1 }}/filebeat.yml
 Restart=always
 User=root
 Group=root

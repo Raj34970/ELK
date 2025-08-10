@@ -3,7 +3,7 @@ Description=Metricbeat Service
 After=network.target
 
 [Service]
-ExecStart=/opt/{{ item.1 }}/metricbeat -e -c /opt/{{ item.1 }}/metricbeat.yml
+ExecStart=/opt/{{ item.0 }}-{{ item.1 }}/metricbeat -e -c /opt/{{ item.0 }}-{{ item.1 }}/metricbeat.yml
 Restart=always
 User=root
 Group=root

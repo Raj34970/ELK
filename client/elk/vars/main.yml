@@ -1,12 +1,14 @@
 ---
 elk_services:
-  - packetbeat
-  - metricbeat
-  - filebeat
-  - heartbeat
+  # - packetbeat
+  # - metricbeat
+  # - filebeat
+  # - heartbeat
+  - auditbeat
 
 versions:
-  - 8.17.2-linux-x86_64
-  - 8.17.2-linux-x86_64
-  - 8.17.2-linux-x86_64
+  # - 8.17.2-linux-x86_64
+  # - 8.17.2-linux-x86_64
+  # - 8.17.2-linux-x86_64
+  # - 8.17.2-linux-x86_64
   - 8.17.2-linux-x86_64

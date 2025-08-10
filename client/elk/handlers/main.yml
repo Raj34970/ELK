@@ -23,6 +23,12 @@
     state: restarted
     enabled: true
 
+- name: Restart auditbeat
+  ansible.builtin.systemd:
+    name: auditbeat
+    state: restarted
+    enabled: true
+
 - name: Reload systemd
   ansible.builtin.systemd:
     daemon_reload: true

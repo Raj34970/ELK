@@ -18,7 +18,7 @@ packetbeat.mysql.enabled: true
 
 # Configure the hosts to output to
 output.elasticsearch:
-  hosts: ["{{ elasticsearch_host | default('http://localhost:9200') }}"]
+  hosts: ["{{ ELASTICSEARCH_IP | default('http://localhost:9200') }}"]
   username: "{{ elasticsearch_username | default('elastic') }}"
   password: "{{ elasticsearch_password | default('changeme') }}"
   # To enable SSL, you can uncomment below:

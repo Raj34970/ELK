@@ -1,16 +1,16 @@
 [Unit]
-Description=Elastic Heartbeat
-Documentation=https://www.elastic.co/guide/en/beats/heartbeat/index.html
+Description=Elastic auditbeat
+Documentation=https://www.elastic.co/guide/en/beats/auditbeat/index.html
 After=network.target
 
 [Service]
 User=root
 Group=root
-ExecStart=/opt/{{ item.0 }}-{{ item.1 }}/heartbeat -e -d "*"
+ExecStart=/opt/{{ item.0 }}-{{ item.1 }}/auditbeat -e -d "*"
 Restart=always
 WorkingDirectory=/opt/{{ item.0 }}-{{ item.1 }}/
 Environment="GOPATH=/opt/{{ item.0 }}-{{ item.1 }}/"
-Environment="HEARTBEAT_PATH_CONF=/opt/{{ item.0 }}-{{ item.1 }}/"
+Environment="auditbeat_PATH_CONF=/opt/{{ item.0 }}-{{ item.1 }}/"
 ExecReload=/bin/kill -HUP $MAINPID
 
 [Install]
